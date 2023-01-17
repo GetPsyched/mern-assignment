@@ -1,19 +1,10 @@
 import mongoose from "mongoose";
 
 const studentSchema = mongoose.Schema({
-  generalRegistrationNumber: Number,
-  name: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-  address: {
-    type: String,
-    required: true,
-  },
+  generalRegistrationNumber: { type: Number, required: true, unique: true },
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  address: { type: String, required: true },
   city: {
     type: String,
     enum: ["Abu Dhabi", "Dubai", "Sharjah", "Ajman"],
