@@ -26,7 +26,7 @@ export const deleteStudent = async (req, res) => {
 
   try {
     await StudentModel.findByIdAndRemove(id).exec();
-    res.status(204);
+    res.sendStatus(204);
   } catch (error) {
     console.log(error);
   }
