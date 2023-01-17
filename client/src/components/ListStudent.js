@@ -13,12 +13,14 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { Container } from "@material-ui/core";
+import { createSearchParams, useNavigate } from "react-router-dom";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -93,7 +95,22 @@ export default function ListStudent() {
   const [rows, setRows] = useState([]);
   const [update, setUpdate] = useState(false);
   const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
 
+  const updateStudent = (student) => {
+    navigate({
+      pathname: "/students/update",
+      search: createSearchParams({
+        gr: student.generalRegistrationNumber,
+        name: student.name,
+        email: student.email,
+        address: student.address,
+        city: student.city,
+        grade: student.grade,
+        section: student.section,
+      }).toString(),
+    });
+  };
   const deleteStudent = (id) => {
     axiosPrivate.delete(`/students/${id}`).then(() => setUpdate(!update));
   };
@@ -133,7 +150,7 @@ export default function ListStudent() {
               <TableCell>City</TableCell>
               <TableCell align="right">Grade</TableCell>
               <TableCell>Section</TableCell>
-              <TableCell>Action</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -152,6 +169,12 @@ export default function ListStudent() {
                 <TableCell align="right">{student.grade}</TableCell>
                 <TableCell>{student.section}</TableCell>
                 <TableCell>
+                  <IconButton
+                    aria-label="update"
+                    onClick={() => updateStudent(student)}
+                  >
+                    <EditIcon />
+                  </IconButton>
                   <IconButton
                     aria-label="delete"
                     onClick={() => deleteStudent(student._id)}

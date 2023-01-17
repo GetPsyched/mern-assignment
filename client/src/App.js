@@ -7,6 +7,7 @@ import RequireAuth from "./components/RequireAuth.js";
 import Home from "./components/Home.js";
 import ListStudent from "./components/ListStudent";
 import CreateStudent from "./components/CreateStudent";
+import UpdateStudent from "./components/UpdateStudent";
 import Missing from "./components/Missing.js";
 
 function App() {
@@ -26,6 +27,9 @@ function App() {
         </Route>
         <Route element={<RequireAuth />}>
           <Route path="/students/new" element={<CreateStudent />} />
+        </Route>
+        <Route element={<RequireAuth />}>
+          <Route path="/students/update" element={<UpdateStudent />} />
         </Route>
 
         {/* default route */}
