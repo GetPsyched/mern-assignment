@@ -101,6 +101,7 @@ export default function ListStudent() {
     navigate({
       pathname: "/students/update",
       search: createSearchParams({
+        id: student._id,
         gr: student.generalRegistrationNumber,
         name: student.name,
         email: student.email,

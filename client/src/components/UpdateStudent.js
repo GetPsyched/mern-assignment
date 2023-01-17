@@ -15,6 +15,7 @@ export default function UpdateStudent() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [student, setStudent] = useState({
+    _id: searchParams.get("id"),
     generalRegistrationNumber: searchParams.get("gr"),
     name: searchParams.get("name"),
     email: searchParams.get("email"),
