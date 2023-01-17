@@ -21,8 +21,8 @@ code {
 
 section {
   width: 100%;
-  max-width: 15vw;
-  min-height: 87.8vh;
+  max-width: 420px;
+  min-height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
