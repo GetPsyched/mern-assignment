@@ -14,7 +14,7 @@ const Home = () => {
     <>
       <header>
         <h1>MERN Assignment</h1>
-        <div className="flexGrow">
+        <div className="signout">
           <button onClick={logout}>Sign Out</button>
         </div>
       </header>

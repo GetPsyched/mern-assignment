@@ -1,5 +1,26 @@
 .App {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  flex-grow: 1;
+  padding-bottom: 1rem;
+}
+
+header {
+  justify-content: center;
+  display: flex;
+  min-width: 100vw;
+  background-color:antiquewhite;
+}
+
+.signout {
+  padding: 1.75rem;
 }
 
 .App-logo {
