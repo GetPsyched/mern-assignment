@@ -1,20 +1,21 @@
-import { useRef, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import { Box, Button, Container, TextField } from '@mui/material';
+import { useRef, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
-const REGISTER_URL = "/register";
+const REGISTER_URL = '/register';
 
 const Register = () => {
   const userRef = useRef();
   const errRef = useRef();
 
-  const [user, setUser] = useState("");
-  const [pwd, setPwd] = useState("");
+  const [user, setUser] = useState('');
+  const [pwd, setPwd] = useState('');
 
-  const [matchPwd, setMatchPwd] = useState("");
+  const [matchPwd, setMatchPwd] = useState('');
   const [validMatch, setValidMatch] = useState(false);
 
-  const [errMsg, setErrMsg] = useState("");
+  const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
 
   const axiosPrivate = useAxiosPrivate();
@@ -28,7 +29,7 @@ const Register = () => {
   }, [pwd, matchPwd]);
 
   useEffect(() => {
-    setErrMsg("");
+    setErrMsg('');
   }, [user, pwd, matchPwd]);
 
   const handleSubmit = async (e) => {
@@ -36,23 +37,23 @@ const Register = () => {
     try {
       await axiosPrivate.post(REGISTER_URL, JSON.stringify({ user, pwd }));
       setSuccess(true);
-      setUser("");
-      setPwd("");
-      setMatchPwd("");
+      setUser('');
+      setPwd('');
+      setMatchPwd('');
     } catch (err) {
       if (!err?.response) {
-        setErrMsg("No Server Response");
+        setErrMsg('No Server Response');
       } else if (err.response?.status === 409) {
-        setErrMsg("Username Taken");
+        setErrMsg('Username Taken');
       } else {
-        setErrMsg("Registration Failed");
+        setErrMsg('Registration Failed');
       }
       errRef.current.focus();
     }
   };
 
   return (
-    <>
+    <Container>
       {success ? (
         <section>
           <h1>Success!</h1>
@@ -64,54 +65,69 @@ const Register = () => {
         <section>
           <p
             ref={errRef}
-            className={errMsg ? "errmsg" : "offscreen"}
+            className={errMsg ? 'errmsg' : 'offscreen'}
             aria-live="assertive"
           >
             {errMsg}
           </p>
           <h1>Register</h1>
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="username">Username:</label>
-            <input
-              type="text"
+          <Box
+            component="form"
+            sx={{
+              '& > :not(style)': { m: 1, width: '25ch' },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <TextField
               id="username"
-              ref={userRef}
-              autoComplete="off"
-              onChange={(e) => setUser(e.target.value)}
+              label="Username"
+              variant="outlined"
               value={user}
+              ref={userRef}
+              onChange={(e) => setUser(e.target.value)}
               required
             />
 
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
+            <TextField
               id="password"
-              onChange={(e) => setPwd(e.target.value)}
-              value={pwd}
-              required
-            />
-
-            <label htmlFor="confirm_pwd">Confirm Password:</label>
-            <input
               type="password"
-              id="confirm_pwd"
-              onChange={(e) => setMatchPwd(e.target.value)}
-              value={matchPwd}
+              label="Password"
+              variant="outlined"
+              value={pwd}
+              onChange={(e) => setPwd(e.target.value)}
               required
             />
 
-            <button disabled={!validMatch}>Sign Up</button>
-          </form>
-          <p>
-            Already registered?
-            <br />
-            <span className="line">
-              <Link to="/">Sign In</Link>
-            </span>
-          </p>
+            <TextField
+              id="confirm_password"
+              type="password"
+              label="Confirm Password"
+              variant="outlined"
+              value={matchPwd}
+              onChange={(e) => setMatchPwd(e.target.value)}
+              required
+            />
+
+            <Button
+              disabled={!validMatch}
+              variant="contained"
+              color="success"
+              onClick={handleSubmit}
+            >
+              Sign Up
+            </Button>
+            <p>
+              Already registered?
+              <br />
+              <span className="line">
+                <Link to="/">Sign In</Link>
+              </span>
+            </p>
+          </Box>
         </section>
       )}
-    </>
+    </Container>
   );
 };
 

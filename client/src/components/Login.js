@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
-import useAuth from "../hooks/useAuth";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import { useEffect, useRef, useState } from 'react';
+import useAuth from '../hooks/useAuth';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import { Box, Button, Container, TextField } from '@mui/material';
 
-const LOGIN_URL = "/login";
+const LOGIN_URL = '/login';
 
 const Login = () => {
   const { setAuth } = useAuth();
@@ -12,11 +13,11 @@ const Login = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || '/';
 
-  const [user, setUser] = useState("");
-  const [pwd, setPwd] = useState("");
-  const [errMsg, setErrMsg] = useState("");
+  const [user, setUser] = useState('');
+  const [pwd, setPwd] = useState('');
+  const [errMsg, setErrMsg] = useState('');
 
   const axiosPrivate = useAxiosPrivate();
 
@@ -25,7 +26,7 @@ const Login = () => {
   }, []);
 
   useEffect(() => {
-    setErrMsg("");
+    setErrMsg('');
   }, [user, pwd]);
 
   const handleSubmit = async (e) => {
@@ -38,58 +39,68 @@ const Login = () => {
       );
       const accessToken = response?.data?.accessToken;
       setAuth({ user, pwd, accessToken });
-      setUser("");
-      setPwd("");
+      setUser('');
+      setPwd('');
       navigate(from, { replace: true });
     } catch (error) {
       if (!error?.response) {
-        setErrMsg("No Server Response");
+        setErrMsg('No Server Response');
       } else if (error?.status === 400) {
-        setErrMsg("Missing username or password");
+        setErrMsg('Missing username or password');
       } else if (error?.status === 401) {
-        setErrMsg("Unauthorised");
+        setErrMsg('Unauthorised');
       } else {
-        setErrMsg("Login Failed");
+        setErrMsg('Login Failed');
       }
       errRef.current.focus();
     }
   };
 
   return (
-    <section>
-      <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"}>
+    <Container>
+      <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'}>
         {errMsg}
       </p>
       <h1>Sign In</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
+      <Box
+        component="form"
+        sx={{
+          '& > :not(style)': { m: 1, width: '25ch' },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <TextField
           id="username"
+          label="Username"
+          variant="outlined"
+          value={user}
           ref={userRef}
           onChange={(e) => setUser(e.target.value)}
-          value={user}
           required
         />
 
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
+        <TextField
           id="password"
-          onChange={(e) => setPwd(e.target.value)}
+          type="password"
+          label="Password"
+          variant="outlined"
           value={pwd}
+          onChange={(e) => setPwd(e.target.value)}
           required
         />
 
-        <button>Sign In</button>
-      </form>
-      <p>
-        Don't have an account?
-        <span>
-          <Link to="/register">Sign Up</Link>
-        </span>
-      </p>
-    </section>
+        <Button variant="contained" color="success" onClick={handleSubmit}>
+          Sign In
+        </Button>
+        <p>
+          Don't have an account?&nbsp;
+          <span>
+            <Link to="/register">Sign Up</Link>
+          </span>
+        </p>
+      </Box>
+    </Container>
   );
 };
 
