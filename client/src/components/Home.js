@@ -1,29 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth.js";
+import NavBar from './NavBar.js';
 
 const Home = () => {
-  const { setAuth } = useAuth();
-  const navigate = useNavigate();
-
-  const logout = async () => {
-    setAuth({});
-    navigate("/login");
-  };
-
-  return (
-    <>
-      <header>
-        <h1>MERN Assignment</h1>
-        <div className="signout">
-          <button onClick={logout}>Sign Out</button>
-        </div>
-      </header>
-      <section className="App-sidebar">
-        <Link to="/students">List Students</Link>
-        <Link to="/students/new">Create Student</Link>
-      </section>
-    </>
-  );
+  return <NavBar />;
 };
 
 export default Home;

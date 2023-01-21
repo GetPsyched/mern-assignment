@@ -25,6 +25,7 @@ import {
   TablePagination,
   TableRow,
 } from '@mui/material';
+import NavBar from './NavBar';
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -142,82 +143,88 @@ export default function ListStudent() {
   };
 
   return (
-    <Container>
-      <h2>Student List</h2>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="right">GR No.</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Address Line</TableCell>
-              <TableCell>City</TableCell>
-              <TableCell align="right">Grade</TableCell>
-              <TableCell>Section</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {(rowsPerPage > 0
-              ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              : rows
-            ).map((student) => (
-              <TableRow key={student.generalRegistrationNumber}>
-                <TableCell align="right" component="th" scope="row">
-                  {student.generalRegistrationNumber}
-                </TableCell>
-                <TableCell>{student.name}</TableCell>
-                <TableCell>{student.email}</TableCell>
-                <TableCell>{student.address}</TableCell>
-                <TableCell>{student.city}</TableCell>
-                <TableCell align="right">{student.grade}</TableCell>
-                <TableCell>{student.section}</TableCell>
-                <TableCell>
-                  <IconButton
-                    aria-label="update"
-                    onClick={() => updateStudent(student)}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    aria-label="delete"
-                    onClick={() => deleteStudent(student._id)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
+    <>
+      <NavBar />
+      <Container>
+        <h2>Student List</h2>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="right">GR No.</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Address Line</TableCell>
+                <TableCell>City</TableCell>
+                <TableCell align="right">Grade</TableCell>
+                <TableCell>Section</TableCell>
+                <TableCell>Actions</TableCell>
               </TableRow>
-            ))}
+            </TableHead>
+            <TableBody>
+              {(rowsPerPage > 0
+                ? rows.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                : rows
+              ).map((student) => (
+                <TableRow key={student.generalRegistrationNumber}>
+                  <TableCell align="right" component="th" scope="row">
+                    {student.generalRegistrationNumber}
+                  </TableCell>
+                  <TableCell>{student.name}</TableCell>
+                  <TableCell>{student.email}</TableCell>
+                  <TableCell>{student.address}</TableCell>
+                  <TableCell>{student.city}</TableCell>
+                  <TableCell align="right">{student.grade}</TableCell>
+                  <TableCell>{student.section}</TableCell>
+                  <TableCell>
+                    <IconButton
+                      aria-label="update"
+                      onClick={() => updateStudent(student)}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton
+                      aria-label="delete"
+                      onClick={() => deleteStudent(student._id)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
 
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={6} />
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 53 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                  colSpan={3}
+                  count={rows.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  SelectProps={{
+                    inputProps: {
+                      'aria-label': 'rows per page',
+                    },
+                    native: true,
+                  }}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  ActionsComponent={TablePaginationActions}
+                />
               </TableRow>
-            )}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                colSpan={3}
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                  inputProps: {
-                    'aria-label': 'rows per page',
-                  },
-                  native: true,
-                }}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions}
-              />
-            </TableRow>
-          </TableFooter>
-        </Table>
-      </TableContainer>
-    </Container>
+            </TableFooter>
+          </Table>
+        </TableContainer>
+      </Container>
+    </>
   );
 }
