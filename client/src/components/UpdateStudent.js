@@ -1,37 +1,39 @@
-import { useState } from "react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { Container } from "@material-ui/core";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useState } from 'react';
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Container } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from '@mui/material';
 
 export default function UpdateStudent() {
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [student, setStudent] = useState({
-    _id: searchParams.get("id"),
-    generalRegistrationNumber: searchParams.get("gr"),
-    name: searchParams.get("name"),
-    email: searchParams.get("email"),
-    address: searchParams.get("address"),
-    city: searchParams.get("city"),
-    grade: searchParams.get("grade"),
-    section: searchParams.get("section"),
+    _id: searchParams.get('id'),
+    generalRegistrationNumber: searchParams.get('gr'),
+    name: searchParams.get('name'),
+    email: searchParams.get('email'),
+    address: searchParams.get('address'),
+    city: searchParams.get('city'),
+    grade: searchParams.get('grade'),
+    section: searchParams.get('section'),
   });
 
-  const [city, setCity] = useState(searchParams.get("city"));
-  const [grade, setGrade] = useState(searchParams.get("grade"));
-  const [section, setSection] = useState(searchParams.get("section"));
+  const [city, setCity] = useState(searchParams.get('city'));
+  const [grade, setGrade] = useState(searchParams.get('grade'));
+  const [section, setSection] = useState(searchParams.get('section'));
 
   const handleUpdate = () => {
-    axiosPrivate.patch("/students", student).then(() => {
-      navigate("/students");
+    axiosPrivate.patch('/students', student).then(() => {
+      navigate('/students');
     });
   };
 
@@ -41,7 +43,7 @@ export default function UpdateStudent() {
       <Box
         component="form"
         sx={{
-          "& > :not(style)": { m: 1, width: "25ch" },
+          '& > :not(style)': { m: 1, width: '25ch' },
         }}
         noValidate
         autoComplete="off"

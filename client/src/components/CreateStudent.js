@@ -1,38 +1,38 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { Container } from "@material-ui/core";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import { useNavigate } from "react-router-dom";
+import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import {
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from '@mui/material';
+import { Container } from '@material-ui/core';
 
 export default function CreateStudent() {
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const [student, setStudent] = React.useState({
     generalRegistrationNumber: 0,
-    name: "",
-    email: "",
-    address: "",
-    city: "",
-    grade: "",
-    section: "",
+    name: '',
+    email: '',
+    address: '',
+    city: '',
+    grade: '',
+    section: '',
   });
 
-  const [city, setCity] = React.useState("");
-  const [grade, setGrade] = React.useState("");
-  const [section, setSection] = React.useState("");
+  const [city, setCity] = React.useState('');
+  const [grade, setGrade] = React.useState('');
+  const [section, setSection] = React.useState('');
 
   const handleCreate = () => {
-    axiosPrivate
-      .post("/students", student)
-      .then(() => {
-        navigate('/students')
-      });
+    axiosPrivate.post('/students', student).then(() => {
+      navigate('/students');
+    });
   };
 
   return (
@@ -41,7 +41,7 @@ export default function CreateStudent() {
       <Box
         component="form"
         sx={{
-          "& > :not(style)": { m: 1, width: "25ch" },
+          '& > :not(style)': { m: 1, width: '25ch' },
         }}
         noValidate
         autoComplete="off"

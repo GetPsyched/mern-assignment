@@ -1,26 +1,30 @@
-import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableFooter from "@mui/material/TableFooter";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import FirstPageIcon from "@mui/icons-material/FirstPage";
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import LastPageIcon from "@mui/icons-material/LastPage";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import { Container } from "@material-ui/core";
-import { createSearchParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import { createSearchParams, useNavigate } from 'react-router-dom';
+import { useTheme } from '@mui/material/styles';
+import {
+  Delete as DeleteIcon,
+  Edit as EditIcon,
+  FirstPage as FirstPageIcon,
+  KeyboardArrowLeft,
+  KeyboardArrowRight,
+  LastPage as LastPageIcon,
+} from '@mui/icons-material';
+import { Container } from '@material-ui/core';
+import {
+  Box,
+  IconButton,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableFooter,
+  TableHead,
+  TablePagination,
+  TableRow,
+} from '@mui/material';
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -49,14 +53,14 @@ function TablePaginationActions(props) {
         disabled={page === 0}
         aria-label="first page"
       >
-        {theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
+        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
       </IconButton>
       <IconButton
         onClick={handleBackButtonClick}
         disabled={page === 0}
         aria-label="previous page"
       >
-        {theme.direction === "rtl" ? (
+        {theme.direction === 'rtl' ? (
           <KeyboardArrowRight />
         ) : (
           <KeyboardArrowLeft />
@@ -67,7 +71,7 @@ function TablePaginationActions(props) {
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label="next page"
       >
-        {theme.direction === "rtl" ? (
+        {theme.direction === 'rtl' ? (
           <KeyboardArrowLeft />
         ) : (
           <KeyboardArrowRight />
@@ -78,7 +82,7 @@ function TablePaginationActions(props) {
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label="last page"
       >
-        {theme.direction === "rtl" ? <FirstPageIcon /> : <LastPageIcon />}
+        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
       </IconButton>
     </Box>
   );
@@ -99,7 +103,7 @@ export default function ListStudent() {
 
   const updateStudent = (student) => {
     navigate({
-      pathname: "/students/update",
+      pathname: '/students/update',
       search: createSearchParams({
         id: student._id,
         gr: student.generalRegistrationNumber,
@@ -116,7 +120,7 @@ export default function ListStudent() {
     axiosPrivate.delete(`/students/${id}`).then(() => setUpdate(!update));
   };
   useEffect(() => {
-    axiosPrivate.get("/students").then((students) => {
+    axiosPrivate.get('/students').then((students) => {
       setRows(students.data);
     });
   }, [update]);
@@ -195,14 +199,14 @@ export default function ListStudent() {
           <TableFooter>
             <TableRow>
               <TablePagination
-                rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                 colSpan={3}
                 count={rows.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{
                   inputProps: {
-                    "aria-label": "rows per page",
+                    'aria-label': 'rows per page',
                   },
                   native: true,
                 }}
