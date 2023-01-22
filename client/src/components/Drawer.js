@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Box,
-  Button,
   Drawer,
   IconButton,
   List,
@@ -31,9 +30,9 @@ export default function TemporaryDrawer() {
       <ListItem key={text} disablePadding>
         <ListItemButton>
           <ListItemIcon>
-            {text == 'Home' ? (
+            {text === 'Home' ? (
               <Home />
-            ) : text == 'List Students' ? (
+            ) : text === 'List Students' ? (
               <FormatListBulleted />
             ) : (
               <Add />
@@ -47,10 +46,13 @@ export default function TemporaryDrawer() {
 
   return (
     <nav>
-      <IconButton edge="start" color="inherit" sx={{ mr: 2 }}>
-        <Button onClick={toggleDrawer(true)}>
-          <Menu />
-        </Button>
+      <IconButton
+        edge="start"
+        color="inherit"
+        sx={{ mr: 2 }}
+        onClick={toggleDrawer(true)}
+      >
+        <Menu />
       </IconButton>
       <Drawer anchor="left" open={state} onClose={toggleDrawer(false)}>
         <Box
